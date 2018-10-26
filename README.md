@@ -15,8 +15,9 @@ from
 group by s.id order by s.id;
 ```
 
-### 2. 
-
-
+### 2. Не нашел ничего лучше, чем использовать "сырой" запрос, тк django модели не поддерживают подписки на deferred поля
+```python
+Specs.objects.raw("select s.id as id, s.name as name, count(p.id) as persons_count from spec as s left join person as p on s.id = cast(p.params->>'specId' as integer) group by s.id order by s.id;")
+```
 
 ### 3. [Python script](./main.py) with calling example
